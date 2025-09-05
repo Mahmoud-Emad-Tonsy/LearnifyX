@@ -1,37 +1,36 @@
 import React from 'react'
 import { Link, useHistory } from 'react-router-dom'
-
 import { Form, Input, Button, Checkbox, Divider, Select } from 'antd'
 import {
   MailOutlined,
   LockOutlined,
-  GoogleOutlined,
   UserOutlined,
   MobileOutlined,
-  CodeSandboxOutlined
+  CodeSandboxOutlined,
+  GoogleOutlined,
 } from '@ant-design/icons'
+import { useDispatch } from 'react-redux'
 import { register } from '../../reducers/authReducer'
 
-import { useDispatch } from 'react-redux'
-
 import {
-  FormItemFlex,
   PageContainer,
   FormContainer,
   FormWrapper,
-  FormTitle
+  FormTitle,
+  FormItemFlex,
+  SocialButton,
 } from './style'
 
-const Registeration = () => {
+const Registration = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useHistory()
+
   const onFinish = (values) => {
-    console.log('Received values of form: ', values)
     try {
       dispatch(register(values))
-      history.push('/login')
+     navigate.push('/login')
     } catch (e) {
-      console.log("can't register")
+      console.log("Can't register", e)
     }
   }
 
@@ -45,90 +44,58 @@ const Registeration = () => {
             initialValues={{ remember: false }}
             scrollToFirstError
           >
-            <FormTitle>Sign Up</FormTitle>
+            <FormTitle>Create Account</FormTitle>
             <p>
-              Have already Account ? <Link to="/login">Login</Link>
+              Already have an account? <Link to="/login">Login</Link>
             </p>
 
             <Form.Item
               name="name"
               rules={[
-                {
-                  required: true,
-                  message: 'please enter your name'
-                },
-                {
-                  min: 3,
-                  message: 'please min length for name is 3'
-                }
+                { required: true, message: 'Please enter your full name' },
+                { min: 3, message: 'Name must be at least 3 characters' },
               ]}
             >
-              <Input prefix={<UserOutlined />} placeholder="fullname" />
+              <Input prefix={<UserOutlined />} placeholder="Full Name" />
             </Form.Item>
 
             <Form.Item
               name="username"
               rules={[
-                {
-                  required: true,
-                  message: 'please enter your username'
-                },
-                {
-                  min: 3,
-                  message: 'please min length for username is 3'
-                }
+                { required: true, message: 'Please enter your username' },
+                { min: 3, message: 'Username must be at least 3 characters' },
               ]}
             >
-              <Input prefix={<UserOutlined />} placeholder="username" />
+              <Input prefix={<UserOutlined />} placeholder="Username" />
             </Form.Item>
 
             <Form.Item
               name="email"
               rules={[
-                {
-                  type: 'email',
-                  message: 'The input is not valid E-mail!'
-                },
-                {
-                  required: true,
-                  message: 'Please input your E-mail!'
-                }
+                { type: 'email', message: 'Please enter a valid E-mail' },
+                { required: true, message: 'E-mail is required' },
               ]}
             >
-              <Input prefix={<MailOutlined />} placeholder="E-Mail" />
+              <Input prefix={<MailOutlined />} placeholder="E-mail" />
             </Form.Item>
+
             <Form.Item name="role">
-              <Select prefix={<UserOutlined />} placeholder="role">
+              <Select placeholder="Select Role">
                 <Select.Option value="instructor">Instructor</Select.Option>
                 <Select.Option value="student">Student</Select.Option>
               </Select>
             </Form.Item>
-            <Form.Item
-              name="mobile"
-              rules={[
-                {
-                  // required: true,
-                  message: 'Please input your phone!'
-                }
-              ]}
-            >
-              <Input prefix={<MobileOutlined />} placeholder="mobile" />
+
+            <Form.Item name="mobile">
+              <Input prefix={<MobileOutlined />} placeholder="Mobile (optional)" />
             </Form.Item>
 
             <Form.Item
               name="password"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input your password!'
-                }
-              ]}
+              rules={[{ required: true, message: 'Please enter your password!' }]}
               hasFeedback
             >
-              <Input.Password
-                prefix={<LockOutlined />}
-                placeholder="password"
-              />
+              <Input.Password prefix={<LockOutlined />} placeholder="Password" />
             </Form.Item>
 
             <Form.Item
@@ -136,66 +103,48 @@ const Registeration = () => {
               dependencies={['password']}
               hasFeedback
               rules={[
-                {
-                  required: true,
-                  message: 'Please confirm your password!'
-                },
+                { required: true, message: 'Please confirm your password!' },
                 ({ getFieldValue }) => ({
-                  validator(rule, value) {
+                  validator(_, value) {
                     if (!value || getFieldValue('password') === value) {
                       return Promise.resolve()
                     }
-
                     return Promise.reject(
-                      'The two passwords that you entered do not match!'
+                      'Passwords do not match!'
                     )
-                  }
-                })
+                  },
+                }),
               ]}
             >
-              <Input.Password
-                prefix={<LockOutlined />}
-                placeholder="confirm password"
-              />
+              <Input.Password prefix={<LockOutlined />} placeholder="Confirm Password" />
             </Form.Item>
-            <Form.Item
+
+            {/* <Form.Item
               name="code"
               rules={[
-                {
-                  required: true,
-                  message: 'Please input your nickname!',
-                  whitespace: true
-                },
-                {
-                  len: 6,
-                  message: 'length should be 6'
-                }
+                { required: true, message: 'Please enter your code' },
+                { len: 6, message: 'Code must be 6 characters' },
               ]}
             >
-              <Input prefix={<CodeSandboxOutlined />} placeholder="code" />
-            </Form.Item>
+              <Input prefix={<CodeSandboxOutlined />} placeholder="Code" />
+            </Form.Item> */}
 
-            <FormItemFlex>
+           <FormItemFlex>
               <Form.Item
                 name="agreement"
                 valuePropName="checked"
                 rules={[
                   {
                     validator: (_, value) =>
-                      value
-                        ? Promise.resolve()
-                        : Promise.reject('Should accept agreement')
-                  }
+                      value ? Promise.resolve() : Promise.reject('You must accept the agreement'),
+                  },
                 ]}
               >
                 <Checkbox>
                   I have read the <Link to="#">agreement</Link>
                 </Checkbox>
               </Form.Item>
-              {/* <Form.Item>
-                <Link to="/ForgetPassword">Forget Password?</Link>
-              </Form.Item> */}
-            </FormItemFlex>
+            </FormItemFlex> 
 
             <Form.Item>
               <Button block type="primary" htmlType="submit">
@@ -203,17 +152,12 @@ const Registeration = () => {
               </Button>
             </Form.Item>
 
-            {/* <Divider plain>Or</Divider>
-
-            <Form.Item>
-              <Button block icon={<GoogleOutlined />}>
-                Sign up with Google
-              </Button>
-            </Form.Item> */}
+  
           </Form>
         </FormWrapper>
       </FormContainer>
     </PageContainer>
   )
 }
-export default Registeration
+
+export default Registration

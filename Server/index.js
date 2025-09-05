@@ -35,6 +35,8 @@ app.use(
   })
 )
 
+console.log("process.env.MONGODB_ATLAS_URI",process.env.MONGODB_ATLAS_URI);
+
 mongoose
   .connect(process.env.MONGODB_ATLAS_URI, {
     useNewUrlParser: true,
