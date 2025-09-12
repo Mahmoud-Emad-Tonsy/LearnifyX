@@ -1,16 +1,16 @@
 import React from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import { Form, Input, Button, Checkbox, Divider, Select } from 'antd'
+import { Form, Input, Button, Checkbox, Select } from 'antd'
 import {
   MailOutlined,
   LockOutlined,
   UserOutlined,
   MobileOutlined,
   CodeSandboxOutlined,
-  GoogleOutlined,
 } from '@ant-design/icons'
 import { useDispatch } from 'react-redux'
 import { register } from '../../reducers/authReducer'
+import { message } from 'antd'
 
 import {
   PageContainer,
@@ -18,21 +18,31 @@ import {
   FormWrapper,
   FormTitle,
   FormItemFlex,
-  SocialButton,
 } from './style'
 
 const Registration = () => {
   const dispatch = useDispatch()
   const navigate = useHistory()
 
-  const onFinish = (values) => {
-    try {
-      dispatch(register(values))
-     navigate.push('/login')
-    } catch (e) {
-      console.log("Can't register", e)
+const onFinish = async (values) => {
+  try {
+    const result = await dispatch(register(values))
+    // Check for error in result or payload
+    const errorMsg =
+      result?.error ||
+      result?.payload?.error ||
+      (result?.payload && typeof result.payload === 'string' ? result.payload : null)
+    if (errorMsg) {
+      message.error(errorMsg)
+      return
     }
+    message.success('Registration successful!')
+    navigate.push('/login')
+  } catch (e) {
+    message.error("Can't register: " + (e.message || 'Unknown error'))
   }
+}
+
 
   return (
     <PageContainer>

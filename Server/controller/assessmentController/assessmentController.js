@@ -11,6 +11,7 @@ const { checkplagiarismJob } = require('../../helper/plagarismJob')
 const { DateTime } = require('luxon')
 const Course = require('../../models/course')
 const Notification = require('../../models/notification')
+const { pushNotification } = require('../notificationController/notificationController')
 
 const autoGraderUrl = 'http://127.0.0.1:5000/gradeOnline'
 
@@ -83,6 +84,18 @@ const createAssessment = async (request, response) => {
         data: `new ${assessment.type} added "${assessment.title}"`
       })
       notification.save().catch((err) => console.log(err))
+      try {
+        await pushNotification(
+          enrollment.user,
+          JSON.stringify({
+            title: 'New assessment',
+            body: `${assessment.title}`
+          }),
+          'alert'
+        )
+      } catch (e) {
+        console.log('push send failed', e)
+      }
     }
 
     return response.json(result)

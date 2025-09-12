@@ -4,10 +4,10 @@ const webpush = require("web-push");
 const mongoose = require('mongoose')
 
 
-const publicVapidKey = "";
-const privateVapidKey = "";
+const publicVapidKey = "BM_kEmjklVtvSLMyALWlSLoIYq1xOzmNdN0GPdi-CEatznsSYPK71FijFaTttnYhaIeXEGqA9GaAAUafgStdUXQ";
+const privateVapidKey = "_5qthqATZEfqSKZ205x_QKD77GRNlgsPIBAFYP7wtqQ";
 
-// webpush.setVapidDetails("",publicVapidKey,privateVapidKey);
+webpush.setVapidDetails("mailto:mahmoudelgel22@gmail.com",publicVapidKey,privateVapidKey);
 
 
 const createNotification = async (req, res) => {
@@ -149,7 +149,8 @@ const unsubscribe = async (req, res) => {
 
 const pushNotification = async (user, payload, type = 'alert') => {
     try {
-        const objectId = mongoose.Types.ObjectId(user._id)
+        const userId = (user && user._id) ? user._id : user
+        const objectId = mongoose.Types.ObjectId(userId)
         const subscriptions = await NotificationSubscription.find({ user: objectId }).exec()
 
         subscriptions.forEach(subscription => {
@@ -162,10 +163,11 @@ const pushNotification = async (user, payload, type = 'alert') => {
                     console.log('error in web push send notification : ' + err)
                 })
         });
+        const parsed = JSON.parse(payload || '{}')
         const notification = new Notification({
-            to: user,
+            to: objectId,
             type: type,
-            data: JSON.parse(payload)['title']
+            data: parsed.body || parsed.title || ''
         });
         await notification.save();
     } catch (e) {
@@ -176,16 +178,22 @@ const pushNotification = async (user, payload, type = 'alert') => {
 const push = async (req, res) => {
     try {
         const user = req.user
-        const data = req.body.data
+        const { title, body, type } = req.body
         pushNotification(
             user,
             JSON.stringify({
-                title: data
-            })
+                title: title || 'Notification',
+                body: body || ''
+            }),
+            type || 'alert'
         )
         res.status(200).send('pushed')
+        console.log("send pushed");
+        
     } catch (e) {
         res.status(400).send('error in push: ' + e)
+        console.log("error in push");
+        
     }
 
 }

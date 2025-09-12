@@ -1,5 +1,5 @@
 const dbconfig = {
-    url: "mongodb+srv://mtonsy97:9eYdLShPsmZqrps7@lms.ycamgen.mongodb.net/?retryWrites=true&w=majority&appName=lms",
+    url: "mongodb+srv://mahmoudelgel22_db_user:99Gk7QtqdAjlSsOr@cluster0.v9bjsxy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
     dbname: 'lms'
 }
 
