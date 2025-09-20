@@ -13,12 +13,10 @@ const getAllNotifications = async () => {
   return response.data
 }
 
-const push = async (data) => {
+const push = async ({ title, body, type }) => {
   const response = await axios.post(
     `${baseURL}/push`,
-    {
-      data: data
-    },
+    { title, body, type },
     getAuthHeader()
   )
   return response.data

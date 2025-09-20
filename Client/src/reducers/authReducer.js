@@ -52,20 +52,38 @@ export const editProfile = (user) => {
   }
 }
 
+// export const register = (credentials) => {
+//   return async () => {
+//     try {
+//       const response = await usersService.register(credentials)
+//       if (!response) {
+//         throw new Error('invalid error with response')
+//       }
+//     } catch (error) {
+//       message.error('invalid credentials')
+//       console.log(error, " iam error authReducer")
+//     }
+//   }
+// }
+
 export const register = (credentials) => {
   return async () => {
     try {
       const response = await usersService.register(credentials)
       if (!response) {
-        throw new Error('invalid error with response')
+        return { error: 'No response from server' }
       }
+      // If backend returns error in response
+      if (response.error) {
+        return { error: response.error }
+      }
+      return { payload: response }
     } catch (error) {
-      message.error('invalid credentials')
-      console.log(error, " iam error authReducer")
+      // Return error details for frontend to handle
+      return { error: error?.response?.data?.error || 'invalid credentials' }
     }
   }
 }
-
 /* actions for authentication bellow */
 
 export const login = (credentials) => {

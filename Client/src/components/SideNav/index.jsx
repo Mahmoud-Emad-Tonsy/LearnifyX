@@ -39,7 +39,8 @@ const SideNav = (props) => {
     >
       <div
         style={{ cursor: 'pointer' }}
-        onClick={() => (window.location = 'https://bedoeg.com/')}
+        onClick={() => {console.log("")}
+        }
       >
         <Logo collapsed={collapsed} />
       </div>

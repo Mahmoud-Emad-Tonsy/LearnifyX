@@ -208,7 +208,7 @@ const AuthnticatedApp = () => {
             <Route path="/app/*" component={NotFoundView} />
           </Switch>
         </Content>
-        <S.Footer>Copyright ©{new Date().getFullYear()} BEDO LMS</S.Footer>
+        <S.Footer>Copyright ©{new Date().getFullYear()} LearnifyX</S.Footer>
       </Layout>
     </Layout>
   )

@@ -17,7 +17,7 @@ function urlBase64ToUint8Array(base64String) {
   return outputArray
 }
 
-const publicVapidKey=urlBase64ToUint8Array("");
+const publicVapidKey = urlBase64ToUint8Array(process.env.REACT_APP_VAPID_PUBLIC_KEY || "BM_kEmjklVtvSLMyALWlSLoIYq1xOzmNdN0GPdi-CEatznsSYPK71FijFaTttnYhaIeXEGqA9GaAAUafgStdUXQ");
 
 function sendSubscription(subscription) {
     console.log(subscription);

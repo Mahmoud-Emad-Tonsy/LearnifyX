@@ -86,7 +86,7 @@ const Courses = () => {
         <Input.Search
           allowClear
           onSearch={handleSearch}
-          placeholder="input search text"
+          placeholder="Search"
           size="large"
           style={{ width: '300px', alignSelf: 'center' }}
         />

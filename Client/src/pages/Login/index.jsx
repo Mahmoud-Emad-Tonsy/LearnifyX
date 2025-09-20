@@ -1,18 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-
 import { login } from '../../reducers/authReducer'
-
 import { Form, Input, Button, Checkbox, Divider } from 'antd'
 import { MailOutlined, LockOutlined, GoogleOutlined } from '@ant-design/icons'
-
 import {
-  FormItemFlex,
   PageContainer,
   FormContainer,
   FormWrapper,
-  FormTitle
+  FormTitle,
+  FormItemFlex,
+  SocialButton,
 } from './style'
 
 const Login = () => {
@@ -47,49 +45,33 @@ const Login = () => {
             initialValues={getInitialValues()}
             scrollToFirstError
           >
-            <FormTitle>Sign in</FormTitle>
-
+            <FormTitle>Welcome Back</FormTitle>
             <p>
-              New user? <Link to="/register">Create Account</Link>
+              New here? <Link to="/register">Create an account</Link>
             </p>
 
             <Form.Item
               name="email"
               rules={[
-                {
-                  type: 'email',
-                  message: 'The input is not valid E-mail!'
-                },
-                {
-                  required: true,
-                  message: 'Please input your E-mail!'
-                }
+                { type: 'email', message: 'Please enter a valid E-mail!' },
+                { required: true, message: 'E-mail is required!' },
               ]}
             >
-              <Input prefix={<MailOutlined />} placeholder="E-Mail" />
+              <Input prefix={<MailOutlined />} placeholder="E-mail" />
             </Form.Item>
 
             <Form.Item
               name="password"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input your password!'
-                }
-              ]}
-              hasFeedback
+              rules={[{ required: true, message: 'Password is required!' }]}
             >
-              <Input.Password
-                prefix={<LockOutlined />}
-                placeholder="password"
-              />
+              <Input.Password prefix={<LockOutlined />} placeholder="Password" />
             </Form.Item>
 
             <FormItemFlex>
               <Form.Item name="remember" valuePropName="checked" noStyle>
                 <Checkbox>Remember me</Checkbox>
               </Form.Item>
-              {/* <Link to="/ForgetPassword">Forget Password</Link> */}
+              <Link to="/forget-password">Forgot Password?</Link>
             </FormItemFlex>
 
             <Form.Item>
@@ -98,17 +80,11 @@ const Login = () => {
               </Button>
             </Form.Item>
 
-            {/* <Divider plain>Or</Divider>
-
-            <Form.Item>
-              <Button block icon={<GoogleOutlined />}>
-                Sign in with Google
-              </Button>
-            </Form.Item> */}
           </Form>
         </FormWrapper>
       </FormContainer>
     </PageContainer>
   )
 }
+
 export default Login

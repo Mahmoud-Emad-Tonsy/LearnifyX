@@ -1,0 +1,8 @@
+mahmoudelgel22_db_user
+99Gk7QtqdAjlSsOr
+
+{
+"subject": "mailto: <mahmoudelgel22@gmail.com>",
+"publicKey": "BM_kEmjklVtvSLMyALWlSLoIYq1xOzmNdN0GPdi-CEatznsSYPK71FijFaTttnYhaIeXEGqA9GaAAUafgStdUXQ",
+"privateKey": "_5qthqATZEfqSKZ205x_QKD77GRNlgsPIBAFYP7wtqQ"
+}

@@ -61,7 +61,7 @@ const Logo = ({ collapsed }) => {
             transform="translate(70.82 122.47) scale(1.24 1)"
           >
 
-            BEDO-LMS
+           LearnifyX
           </text>
         </svg>
       </LogoContainer2>
@@ -74,7 +74,7 @@ const Logo = ({ collapsed }) => {
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 856.31 203.56"
       >
-        <title>bedo-lms</title>
+        <title>LearnifyX</title>
         <path
           className="logo1-cls-1"
           d="M257,306c-6.79,19.39-4.61,40.86,1.24,60.75,0,0,0,0,0,0,1.6,5.45,3.47,10.78,5.51,15.92Z"
@@ -109,7 +109,7 @@ const Logo = ({ collapsed }) => {
         />
         <text className="logo1-cls-4" transform="translate(377.2 139.42)">
 
-          BEDO-LMS
+          LearnifyX
         </text>
         <line
           className="logo1-cls-5"
